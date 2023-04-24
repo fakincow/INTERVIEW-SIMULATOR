@@ -1,6 +1,6 @@
 {
   "expo": {
-    "owner": "zabaroth",
+    "owner": "playftw",
     "name": "interview-simulator",
     "slug": "interview-simulator",
     "version": "1.0.0",
@@ -29,7 +29,6 @@
       },
       "package": "com.zabaroth.interviewSimulator"
     },
-    
     "androidStatusBar": {
       "backgroundColor": "#C2185B",
       "translucent": false
@@ -39,7 +38,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ad924698-579a-437c-9c85-1759cb4399f9"
+        "projectId": "c4243c3e-6878-449c-b8ab-01e0459a93bc"
       }
     }
   }
