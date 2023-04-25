@@ -5,31 +5,24 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
-  SafeAreaView,
   ScrollView,
   ImageBackground
 } from "react-native";
-import FtwTextComponent from './FtwText';
 import { FontAwesome, FontAwesome5, AntDesign, Fontisto } from '@expo/vector-icons';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import TopMenuBtns from './TopMenuBtns';
 import { Picker, Item } from '@react-native-picker/picker';
+import Monkeys from './data/Monkeys';
 
-import CatsBgs from './data/Cats'
-import Monkeys from './data/Monkeys'
 export default function TopMenuBar({ navigation, globalSkin }) {
   const [currentSkin, setCurrentSkin] = useState('currentSkin');
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [currentDiff, setCurrentDiff] = useState('normal');
   const [currentLang, setCurrentLang] = useState('ENG');
-  const [selected, setSelected] = useState(null);
   const bgs = Monkeys.default;
   loading = true;
   const lang = 'EN';
-  useEffect(() => {
-    setCurrentSkin(globalSkin);
-  }, [globalSkin]);
+
 
   return (
     <View style={styles.container}>
@@ -38,15 +31,12 @@ export default function TopMenuBar({ navigation, globalSkin }) {
           fontWeight="bold"
           selectedValue={selectedLanguage}
           onValueChange={(itemValue, itemIndex) =>
-            setSelectedLanguage(itemValue)
+           alert('очень жаль, Interview will be at English')
           }>
-          <Picker.Item label="ENGLISH DEFAULT THEME SKIN" value="ENG" color="rgba(14, 167, 41, 1)" backgroundColor="red" />
-          <Picker.Item label="RUS DEFAULT THEME SKIN" value="RU" color="red" />
-          <Picker.Item label="HEB DEFAULT THEME" value="HE" color="blue" />
-          <Picker.Item label="ASIAN DEFAULT THEME" value="CHINA" color="green" />
-          <Picker.Item label="FTW DEFAULT THEME" value="FTW" color="black" />
-          <Picker.Item label="FTW BBB GAMING THEME" value="FTW" color="red" />
-          <Picker.Item label="INDIA DEFAULT THEME" value="FTW" color="pink" />
+          <Picker.Item label="ENGLISH" value="ENG" color="rgba(14, 167, 41, 1)" backgroundColor="red" />
+          <Picker.Item label="RUSSIAN" value="RU" color="red" />
+          <Picker.Item label="HEBREW" value="HE" color="blue" />
+          <Picker.Item label="UKRAINE" value="UKR" color="blue" />
         </Picker>
       </View>
       <View style={{ backgroundColor: 'rgba(5, 5, 14, 0.77)', top: -10, resizeMode: "stretch", width: 370, borderRadius: 18 }} >
@@ -77,27 +67,25 @@ export default function TopMenuBar({ navigation, globalSkin }) {
       <Text style={[styles.mentorText, { textAlign: "left", fontSize: 8, padding: 10, margin: 10, color: "white" }]}>ver: 1.0 theme: {currentSkin} dif: {currentDiff}  lang: {currentLang}</Text>
       <View style={[styles.row, { resizeMode: "stretch", position: "absolute", top: 30, marginTop: 25, zIndex: 9 }]}>
         <ScrollView horizontal={true} fadingEdgeLength={15} >
-          <TouchableOpacity onPress={() => navigation.navigate("INTERVIEW SIMULATOR (home)", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
+          <TouchableOpacity onPress={() => navigation.navigate("JOB INT SIMULATOR home", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
             <TopMenuBtns text="HOME " bgcolor="rgba(94, 214, 105, 0.85)" icon={<FontAwesome5 name="users-cog" size={30} color="black" />} textColor="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("INTERVIEW SIMULATOR (QuickPlay)", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
+          <TouchableOpacity onPress={() => navigation.navigate("JOB INT SIMULATOR QuickPlay", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
             <TopMenuBtns text="SKIRMISH " bgcolor="rgba(200, 4, 47, 0.85)" icon={<FontAwesome5 name="glasses" size={30} color="black" />} textColor="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("INTERVIEW SIMULATOR (Story)", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
+          <TouchableOpacity onPress={() => navigation.navigate("JOB INT SIMULATOR Story", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
             <TopMenuBtns text="STORY" bgcolor="rgba(14, 167, 41, 0.85)" icon={<FontAwesome5 name="user-graduate" size={30} color="black" />} textColor="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("INTERVIEW SIMULATOR (Learn)", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
+          <TouchableOpacity onPress={() => navigation.navigate("JOB INT SIMULATOR Learn", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
             <TopMenuBtns text="TUTORIAL " bgcolor="rgba(177, 0, 146, 0.85)" icon={<MaterialCommunityIcons name="theater" size={30} color="black" />} textColor="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("INTERVIEW SIMULATOR (HelpPage)", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
+          <TouchableOpacity onPress={() => navigation.navigate("JOB INT SIMULATOR Help", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
             <TopMenuBtns text="HELP " bgcolor="rgba(189, 223, 6, 0.85)" icon={<FontAwesome5 name="donate" size={30} color="black" />} textColor="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("INTERVIEW SIMULATOR (AboutPage)", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
+          <TouchableOpacity onPress={() => navigation.navigate("JOB INT SIMULATOR About", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
             <TopMenuBtns text="ABOUT " bgcolor="rgba(220, 90, 44, 0.85)" icon={<Fontisto name="sunglasses" size={30} color="black" />} textColor="black" />
           </TouchableOpacity>
-                 <TouchableOpacity onPress={() => navigation.navigate("INTERVIEW SIMULATOR (Settings)", params = { lang: lang, difficulty: 'MIDDLE', skin: currentSkin })}>
-            <TopMenuBtns text="DOWNLOAD " bgcolor="rgba(80, 51, 222, 0.96)" icon={<Fontisto name="download" size={30} color="black" />} textColor="black" />
-          </TouchableOpacity>
+                 
         </ScrollView>
       </View>
     </View>

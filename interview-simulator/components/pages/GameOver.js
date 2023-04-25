@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Animated, TouchableWithoutFeedback
 } from "react-native";
-
+import {PAGES} from "../../components/data/consts/Enums";
 import { MaterialIcons } from '@expo/vector-icons';
 import MonkeysImages from '../data/Monkeys';
 import ColorsFTW from '../data/ColorsFTW';
@@ -26,7 +26,7 @@ export default function GameOver({ navigation, route }) {
       useNativeDriver: true
     })
       .start(({ returnAnimation }) => {
-        navigation.navigate("INTERVIEW SIMULATOR (home)", params = { lang: 'lang', difficulty: 'MIDDLE', skin: 'currentSkin' })
+        navigation.navigate(PAGES.HomePage, params = { lang: 'lang', difficulty: 'MIDDLE', skin: 'currentSkin' })
         setAnimation(new Animated.Value(0));
       });
   }

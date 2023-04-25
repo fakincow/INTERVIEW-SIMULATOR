@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import { Fontisto } from '@expo/vector-icons';
+import {PAGES} from "../../components/data/consts/Enums";
 import ReactQuestions from "../data/ReactQuestions";
 import AngularQuestions from "../data/AngularQuestions";
 import Html5Questions from "../data/Html5Questions";
@@ -11,24 +12,33 @@ import FixedQuizTop from "../FixedQuizTop";
 import CountDownCircle from "../CountDownCircle";
 import { ProgressBar } from "react-native-paper";
 import backgroundsBBB from '../data/bbbSkin';
-import backgroundsReact from '../data/ReactImages';
-import Rotate from '../animations/Rotate';
 import ftwBgImages from '../data/FTWthemes';
 import Bosses from '../data/Bosses';
-import CatsBgs from '../data/Cats';
 import ColorsFTW from '../data/ColorsFTW';
 import VideoAvatar from '../videoAvatar';
-import WebCamView from '../WebCamView';
 import QuizControlPanel from '../quizControlPanel';
-import Monkeys from '../data/Monkeys';
-import Checkbox from 'expo-checkbox';
-import Gifs from '../data/Gifs';
 import ftwColors from '../data/ColorsFTW';
 let correctList = [];
 let responseList = [];
 let zoombosses = [];
 let zoomBAckgrounds = [];
 avatarsFtw = ftwBgImages.avatarsFunny;
+const generateRandomIndexes = (questionary) => {
+  const nums = new Set();
+  while (nums.size !== 11) {
+    nums.add(Math.floor(Math.random() * questionary.length));
+  }
+  const rnd = [...nums]
+  const rQuestionary = []
+
+  rnd.forEach((i) => {
+    rQuestionary.push(questionary[i])
+  });
+  rQuestionary.forEach((item) => {
+    correctList.push(item.correctIndex);
+  });
+  return rQuestionary;
+}
 export default function Quiz({ navigation, route }) {
   const [perguntaTitles, setPerguntaTitles] = useState([]);
   const [perguntaIndex, setPerguntaIndex] = useState(1);
@@ -41,6 +51,13 @@ export default function Quiz({ navigation, route }) {
   const [animation, setAnimation] = useState(new Animated.Value(1));
   const [timerOn, setTimerOn] = useState(true);
   const amountOfQuestions = 10;
+
+  const [ReactQuestionsRandomized,setReactQuestionsRandomized] = useState(()=>generateRandomIndexes(ReactQuestions));
+  const [AngularQuestionsRandomized,setAngularQuestionsRandomized] =useState(()=>generateRandomIndexes(AngularQuestions));
+  const [Html5QuestionsRandomized, setHtml5QuestionsRandomized] = useState(()=>generateRandomIndexes(Html5Questions));
+  const RandomQuest = [];
+
+
   const startAnimation = () => {
     Animated.timing(animation, {
       toValue: 7,
@@ -60,8 +77,9 @@ export default function Quiz({ navigation, route }) {
   const submitAnswer = () => {
     if (perguntaIndex === amountOfQuestions) {
       calculateFinallResult();
-      setPerguntaIndex(1);
-      navigation.navigate("INTERVIEW SIMULATOR (GameOver)", params = { lang: route.params.lang, difficulty: route.params.difficulty, skin: currentSkin, calculatedScore: calculatedScore })
+      setPerguntaIndex(0);
+       setSelectedId(null);
+      navigation.navigate(PAGES.GameOver, params = { lang: route.params.lang, difficulty: route.params.difficulty, skin: currentSkin, calculatedScore: calculatedScore })
     } else {
 
       setPerguntaIndex((old) => old += 1); //TODO:check change
@@ -80,34 +98,34 @@ export default function Quiz({ navigation, route }) {
     }
     setCalculatedScore(difference);
   };
+
   const generateQuestions = useCallback(() => {
     //TODO: repeated code refactor
     correctList = [];
     questionsTitles = [];
     if (route.params.lang === "REACT") {
-      setQuestions(ReactQuestions[perguntaIndex].answers);
+      setQuestions(ReactQuestionsRandomized[perguntaIndex].answers);
 
-      ReactQuestions.forEach((item) => {
+      ReactQuestionsRandomized.forEach((item) => {
         questionsTitles.push(item.question)
       });
-      ReactQuestions.forEach((item) => {
+      ReactQuestionsRandomized.forEach((item) => {
         correctList.push(item.correctIndex);
       });
     } else if (route.params.lang === "ANGULAR") {
-      setQuestions(AngularQuestions[perguntaIndex].answers);
-      AngularQuestions.forEach((item) => {
+      setQuestions(AngularQuestionsRandomized[perguntaIndex].answers);
+      AngularQuestionsRandomized.forEach((item) => {
         questionsTitles.push(item.question)
       });
-
-      AngularQuestions.forEach((item) => {
+      AngularQuestionsRandomized.forEach((item) => {
         correctList.push(item.correctIndex);
       });
     } else {
-      setQuestions(Html5Questions[perguntaIndex].answers);
-      Html5Questions.forEach((item) => {
+      setQuestions(Html5QuestionsRandomized[perguntaIndex].answers);
+      Html5QuestionsRandomized.forEach((item) => {
         questionsTitles.push(item.question)
       });
-      Html5Questions.forEach((item) => {
+      Html5QuestionsRandomized.forEach((item) => {
         correctList.push(item.correctIndex);
       });
     }
@@ -143,14 +161,15 @@ export default function Quiz({ navigation, route }) {
         }
       }
     }
-  }, [perguntaIndex, route.params]);
+  }, [perguntaIndex, route.params,ReactQuestionsRandomized,AngularQuestionsRandomized,Html5QuestionsRandomized]);
 
   useEffect(() => {
     generateQuestions();
   }, [generateQuestions]);
   useLayoutEffect(() => {
+
     setSelectedId(null);
-   
+
   }, []);
 
   const listItems = questions?.map((question, index) => (
@@ -179,6 +198,7 @@ export default function Quiz({ navigation, route }) {
           fontWeight: "bold",
           borderRadius: 8,
           borderWidth: 3,
+          borderColor: `${correctList[perguntaIndex] === selectedId ? 'green' : 'red'}`,
           backgroundColor: `${index != selectedId ? "rgba(32, 236, 146, 0.82)" : "white"}`,
           color: `${index != selectedId ? "rgba(1, 14, 14, 0.90)" : "rgba(6, 92, 216, 0.90)"}`,
         }}><Fontisto name={`${index != selectedId ? "checkbox-passive" : "checkbox-active"}`} borderWidth={3} size={20} color="black" /> {question} </Text>
@@ -265,6 +285,8 @@ export default function Quiz({ navigation, route }) {
           style={{
             height: 10,
             width: 260,
+            borderWidth: 2,
+            borderColor: 'green'
           }}
           progress={perguntaIndex / 10}
           color={ftwColorArray[perguntaIndex]}
@@ -280,17 +302,17 @@ export default function Quiz({ navigation, route }) {
 
               <Image
                 style={[styles.submitBtn,
-                { position: 'absolute', opacity: 0.9, borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]}
+                { position: 'absolute', opacity: 0.7, borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]}
                 source={require("../../assets/submitBtn3.png")}
               />
 
             )}
-             {selectedId !== null && (
-               <>
- <Animated.View style={[styles.cicrcle, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
-          <Animated.View style={[styles.cicrcle2, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
-          <Animated.View style={[styles.cicrcle3, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
-            </> )}
+            {selectedId !== null && (
+              <>
+                <Animated.View style={[styles.cicrcle, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
+                <Animated.View style={[styles.cicrcle2, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
+                <Animated.View style={[styles.cicrcle3, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
+              </>)}
 
           </View>
         </TouchableWithoutFeedback>
@@ -349,7 +371,7 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
     marginTop: -150,
     width: 130,
-    borderWidth: 6,
+    borderWidth: 12,
     height: 130,
     borderRadius: 130 / 2,
     padding: 5,
@@ -366,7 +388,7 @@ const styles = StyleSheet.create({
     margin: 5,
     zIndex: 1,
     opacity: 0.6,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     position: 'absolute'
   },
   cicrcle2: {
@@ -376,7 +398,7 @@ const styles = StyleSheet.create({
     borderWidth: 10,
     zIndex: 2,
     opacity: 0.5,
-    backgroundColor: 'rgba(1, 0, 4, 0.6)',
+    backgroundColor: 'rgba(1, 0, 4, 0.7)',
     position: 'absolute'
   },
   cicrcle3: {
@@ -386,7 +408,7 @@ const styles = StyleSheet.create({
     borderWidth: 10,
     zIndex: 3,
     opacity: 0.4,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     position: 'absolute'
   }
 });

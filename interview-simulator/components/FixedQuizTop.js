@@ -4,7 +4,7 @@ import Monkeys from './data/Monkeys';
 import WebCamView from './WebCamView';
 
 import React, { useState, useEffect } from "react";
-const FixedQuizTop = ({ lang, perguntaIndex, randomIndex, route }) => {
+const FixedQuizTop = ({ lang, route }) => {
   function startTimer() {
     timer = setInterval(() => {
       if (Math.floor(seconds) > 5) {

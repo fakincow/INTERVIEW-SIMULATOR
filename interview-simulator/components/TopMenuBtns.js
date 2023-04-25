@@ -7,7 +7,6 @@ import {
   StyleSheet,
 } from "react-native";
 import ftwColors from './data/ColorsFTW';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function TopMenuBtns({ text, icon, textColor ,bgcolor}) {
   const ftwTexts = ftwColors.texts;

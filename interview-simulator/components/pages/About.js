@@ -32,7 +32,7 @@ export default function About({ navigation }) {
         <TouchableOpacity
           onPress={() => setSkinId(skinId + 1)}>
           <View style={[styles.messageDiv, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` },
-          { opacity: 0.6 },
+          { opacity: 0.6,marginTop:230 },
           ]}>
   <Rotate onRecteate={() => setSkinId(skinId + 1)}  />
             <FtwTextComponent text="no human worked on it" textSizechaosRange={"ftw10"} style={{ opacity: 1 }} />

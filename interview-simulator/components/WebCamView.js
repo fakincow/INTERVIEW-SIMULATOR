@@ -1,25 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState} from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
-import { Video, YoutubePlayer, AVPlaybackStatus } from 'expo-av';
-import Monkeys from './data/Monkeys';
-import ColorsFTW from './data/ColorsFTW';
 import Checkbox from 'expo-checkbox';
 export default function WebCamView() {
   const [type, setType] = useState(CameraType.front);
   const [permission, requestPermission] = Camera.useCameraPermissions();
    const [isChecked, setChecked] = useState(true);
   if (!permission) {
-    // Camera permissions are still loading
     return <View />;
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet
     return (
 
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Text style={{ textAlign: 'center' }}>We need you</Text>
         <Button onPress={requestPermission} title="grant permission" />
       </View>
 

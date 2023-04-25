@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import TopMenuBar from "../TopMenuBar";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import {PAGES} from "../../components/data/consts/Enums";
 import {
   Text,
   View,
@@ -15,7 +13,6 @@ import {
 import Monkeys from '../data/Monkeys';
 import { Slider } from "@miblanchard/react-native-slider";
 import ftwColors from '../data/ColorsFTW';
-import bgImages from '../data/imagesUris';
 import WelcomePageTheme from '../data/WelcomePageTheme';
 import {
   defaultstyles,
@@ -40,7 +37,7 @@ export default function WelcomePage({ navigation }) {
       useNativeDriver: true
     })
       .start(({ returnAnimation }) => {
-        navigation.navigate("INTERVIEW SIMULATOR (home)", params = { lang: 'lang', difficulty: 'MIDDLE', skin: currentSkin })
+        navigation.navigate(PAGES.HomePage, params = { lang: 'lang', difficulty: 'MIDDLE', skin: currentSkin })
         setAnimation(new Animated.Value(0));
       });
   }
@@ -56,10 +53,10 @@ export default function WelcomePage({ navigation }) {
     );
     let renderTrackMarkComponent;
 
-    if (trackMarks?.length && (!Array.isArray(value) || value?.length === 1)) {
+    if (trackMarks?.length && (!Array.isArray(value) || value?.length > 0)) {
       renderTrackMarkComponent = (index) => {
         const currentMarkValue = trackMarks[index];
-        const currentSliderValue = (Array.isArray(value) && value[0]) || 0;
+        const currentSliderValue = (value) && value[0] || 0;
         const style =
           currentMarkValue > Math.max(currentSliderValue)
             ? trackMarkStyles.activeMark
@@ -101,22 +98,22 @@ export default function WelcomePage({ navigation }) {
         style={styles.bgimage}
         backgroundColor={ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}
         source={{
-          uri: bgs[Math.floor(Math.random() * bgs.length)],
+          uri: bgs[Math.floor(Math.random() * bgs?.length-1)],
         }}
       >
-      
+
         <View style={[styles.messageDivWelcome, { backgroundColor: 'rgba(46, 235, 16, 0.23)', borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]}>
           <TextInput
-              style={styles.input}
-              onChangeText={setUserName}
-              value={userName}
-              backgroundColor="white"
-            />
+            style={styles.input}
+            onChangeText={setUserName}
+            value={userName}
+            backgroundColor="white"
+          />
           <View style={styles.container} >
-                 <TouchableWithoutFeedback onPress={startAnimation}>
+            <TouchableWithoutFeedback onPress={startAnimation}>
               <Image
                 style={[styles.submitBtn,
-                { borderColor: "white" }]}
+                { borderColor: "yellow" }]}
                 source={{
                   uri: Monkeys.noob[Math.floor(Math.random() * Monkeys.noob.length)],
                 }}
@@ -126,12 +123,14 @@ export default function WelcomePage({ navigation }) {
             <Animated.View style={[styles.cicrcle2, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
             <Animated.View style={[styles.cicrcle3, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }, { backgroundColor: `${ftwColors.skinSlider[Math.floor(Math.random() * ftwColors.skinSlider.length)]}` }]} />
 
-     
+
           </View>
           <TouchableOpacity
             onPress={() => setCurrentSkin((old) => old + 1)}>
-            <View style={[styles.messageDiv, { backgroundColor: 'rgba(234, 254, 231, 0.23)', borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]}>
 
+            <View style={styles.messageDiv}>
+              <Text>HOW DO YOU FEEL TODAY ?</Text>
+                 <Text>КАК ТЫ СЕБЯ ЧУВСТВУЕШЬ ?</Text>
               <SliderContainer style={{
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -143,7 +142,7 @@ export default function WelcomePage({ navigation }) {
                 caption={false}
                 sliderValue={valueMood}
                 step={1}
-                trackMarks={[0, 3, 6, 9]}>
+                trackMarks={[1, 4, 8]}>
                 <Slider minimumTrackTintColor="red" width={280} padding={10} margin={10} backgroundColor="rgba(231, 61, 116, 0.44)" borderRadius={6} maximumTrackTintColor="#1fb28a" animateTransitions maximumValue={9} borderWidth={3} minimumValue={0} step={1} zIndex={12} borderColor={ftwSlider[valueMood]} />
               </SliderContainer>
             </View>
@@ -184,9 +183,10 @@ const styles = StyleSheet.create({
   },
   submitBtn: {
     resizeMode: "stretch",
-    marginTop: -20,
+    marginTop: 5,
     width: 200,
-    borderWidth: 6,
+    opacity: 0.8,
+    borderWidth: 12,
     height: 200,
     borderRadius: 200 / 2,
     padding: 5,
@@ -230,7 +230,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    resizeMode: "cover",
     backgroundColor: "rgba(213, 255, 242, 0.4)",
     borderRadius: 12,
     padding: 10,
@@ -241,12 +240,16 @@ const styles = StyleSheet.create({
     borderWidth: 3
   },
   messageDiv: {
-    backgroundColor: "rgba(244, 249, 251, 0.10)",
+    alignItems: 'center',
+    textAlign: 'center',
+    backgroundColor: "rgba(213, 255, 242, 0.8)",
     borderRadius: 12,
+    borderColor: "rgba(0, 216, 147, 0.80)",
     fontSize: 22,
     fontWeight: "bold",
     margin: 5,
     padding: 5,
     opacity: 0.9,
+    borderWidth: 3
   }
 });

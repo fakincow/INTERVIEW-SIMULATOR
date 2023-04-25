@@ -85,7 +85,7 @@ export default function BottomProgressBar({ onReplaceSkinClick }) {
             </View>
             <Image
               source={{
-                uri: bgs[Math.floor(Math.random() * bgs.length)],
+                uri: bgs[Math.floor(Math.random() * bgs?.length)],
               }}
               style={{
                 resizeMode: "stretch",
@@ -106,7 +106,7 @@ export default function BottomProgressBar({ onReplaceSkinClick }) {
             </View>
             <Image
               source={{
-                uri: bgs[Math.floor(Math.random() * bgs.length)],
+                uri: bgs[Math.floor(Math.random() * bgs?.length)],
               }}
               style={{
                 resizeMode: "stretch",
@@ -129,7 +129,7 @@ export default function BottomProgressBar({ onReplaceSkinClick }) {
             </View>
             <Image
               source={{
-                uri: bgs[Math.floor(Math.random() * bgs.length)],
+                uri: bgs[Math.floor(Math.random() * bgs?.length)],
               }}
               style={{
                 resizeMode: "stretch",

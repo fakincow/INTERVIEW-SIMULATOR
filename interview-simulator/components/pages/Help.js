@@ -36,7 +36,7 @@ const ftwColorArray = FtwColors.progressBars;
 
                     <Text style={styles.paragraph} size={30} >
                         <MaterialIcons name="live-help" size={24} color="black" />
-                    PLEASE SUPPORT OUR PROJECT
+                   ПОМОГИТЕ НАЙТИ РАБОТУ
                     {"\n"}
                       <FontAwesome5 name="donate" size={40} color="black" />
                     </Text>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import TopMenuBar from "../TopMenuBar";
-import Slider from '@react-native-community/slider';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {PAGES} from "../../components/data/consts/Enums";
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import {
   Text,
@@ -33,7 +31,7 @@ export default function HomePage({ navigation }) {
       useNativeDriver: true
     })
       .start(({ returnAnimation }) => {
-        navigation.navigate("INTERVIEW SIMULATOR (QuickPlay)", params = { lang: 'lang', difficulty: 'MIDDLE', skin: currentSkin })
+        navigation.navigate(PAGES.QuickPlay, params = { lang: 'lang', difficulty: 'MIDDLE', skin: currentSkin })
         setAnimation(new Animated.Value(0));
       });
   }
@@ -67,7 +65,7 @@ export default function HomePage({ navigation }) {
             borderWidth: 5
           }}
         />
-          <Text style={styles.paragraph} size={30} > <Ionicons name="md-beer-sharp" color="black" size={40} />WELCOME USERNAME</Text>
+          <Text style={styles.paragraph} size={30} > <Ionicons name="md-beer-sharp" color="black" size={40} />ДОБРО ПОЖАЛОВАТЬ ,WELCOME, USERNAME</Text>
       
             <Text style={styles.paragraph} size={30} >LVL: JUNIOR</Text>
        

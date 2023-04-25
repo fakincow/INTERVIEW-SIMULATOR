@@ -1,50 +1,34 @@
-import { Text, View, StyleSheet, Image, Button, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Animated } from 'react-native';
+import { Text, View, StyleSheet, Image, Button, TouchableOpacity, Animated } from 'react-native';
 import ftwColors from './data/ColorsFTW';
-import bgImages from './data/imagesUris';
-import Monkeys from './data/Monkeys';
-import Cats from './data/Cats';
-import SoberTheme from './data/SoberTheme';
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import {PAGES} from "../components/data/consts/Enums";
 const diffList = ['JUNIOR', 'MIDDLE', 'SINIOR']
-const frameWorksImages = ['https://tse3.mm.bing.net/th?id=OIP._wyXLxCYcaZlMeiRtuOy4gAAAA&pid=Api&P=0',
-  'https://tse2.mm.bing.net/th?id=OIP.DFlNQnwn7RQfE3Jo5naUhgHaI8&pid=Api&P=0',
-  'https://tse4.mm.bing.net/th?id=OIP.Ca8m7_pPKZlmP5bgC7UfCgHaH0&pid=Api&P=0']
-const avatars = [Monkeys.noob, Monkeys.noob, Cats.mentors, Monkeys.default, SoberTheme.bosses, SoberTheme.bosses, bgImages.india, bgImages.mentors]
 export default function RoundBtn({ navigation, route, level, framework, difficulty, skin, images }) {
-  const [currentSkin, setCurrentSkin] = useState("default");
   const [selectedFrameWorkIndex, setSelectedFrameWorkIndex] = useState(0);
   const [animation, setAnimation] = useState(new Animated.Value(0));
   const ftwBorders = ftwColors.backgrounds;
+  const [iconImage, setIconImage] = useState()
 
-  const [iconImage, setIconImage] = useState(images[Math.floor((Math.random() * images.length))])
-  const selectedAvatar = bgImages.india;
-  /*
-    useEffect(() => {
-      list  = avatars[level]
-     
-      if(list){
-        randomAvatar = `${list[Math.floor(Math.random() * list.length)]}` 
-          if(randomAvatar){
-          setIconImage(randomAvatar)
-          }
-      } 
-  }, [level]);
-  */
+  useEffect(() => {
+    if (images) {
+     setIconImage(images[Math.floor((Math.random() * images.length))])
+    }
+   
+  }, [images]);
 
-  const bgs = bgImages.roadMapPage;
 
   const startAnimation = (frameWorkIndex) => {
     setSelectedFrameWorkIndex(frameWorkIndex);
     Animated.timing(animation, {
       toValue: 7,
-      duration: 1500,
+      duration: 1000,
       useNativeDriver: true
     })
       .start(({ returnAnimation }) => {
-        navigation.navigate('INTERVIEW SIMULATOR (Quiz)', params = {
+        navigation.navigate(PAGES.Quiz, params = {
           lang: framework,
           avatars: `${images}`,
-          difficulty: `${diffList[difficulty]}`, skin:  `${skin}`,
+          difficulty: `${diffList[difficulty]}`, skin: `${skin}`,
         })
         setAnimation(new Animated.Value(0));
       });

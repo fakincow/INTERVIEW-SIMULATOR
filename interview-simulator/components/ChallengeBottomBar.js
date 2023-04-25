@@ -23,7 +23,7 @@ export default function ChallengeBottomBar({ onDifficultySelectionChange }) {
             <View style={styles.message}>
               <Text style={styles.paragraph}>
                 {' '}
-                <FontAwesome name="graduation-cap" size={20} color="black" />
+                <FontAwesome name="graduation-cap" size={20} color="green" />
                 JUNIOR
               </Text>
             </View>
@@ -48,7 +48,7 @@ export default function ChallengeBottomBar({ onDifficultySelectionChange }) {
             <View style={styles.message}>
               <Text>
                 {' '}
-                <Entypo name="lab-flask" size={20} color="black" />
+                <Entypo name="lab-flask" size={20} color="blue" />
                 MIDDLE
               </Text>
             </View>
@@ -73,7 +73,7 @@ export default function ChallengeBottomBar({ onDifficultySelectionChange }) {
             onPress={() => onDifficultySelectionChange('SINIOR')}>
             <View style={styles.message}>
               <Text style={styles.sliderText}>
-                <FontAwesome name="lightbulb-o" size={24} color="black" />
+                <FontAwesome name="lightbulb-o" size={24} color="red" />
                 <Text>SINIOR</Text>
               </Text>
             </View>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 16,
     margin: 2,
-    opacity: 0.8,
+    opacity: 0.7,
     borderColor: '#46ac0a',
     borderWidth: 3,
     padding: 5,

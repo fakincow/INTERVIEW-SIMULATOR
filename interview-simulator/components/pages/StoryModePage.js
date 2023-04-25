@@ -14,6 +14,7 @@ import {
   ImageBackground
 } from "react-native";
 import TopMenuBar from "../TopMenuBar";
+
 import { ProgressBar } from "react-native-paper";
 import StoryModeVertScroll from "../StoryModeVertScroll";
 import bgImages from '../data/imagesUris'

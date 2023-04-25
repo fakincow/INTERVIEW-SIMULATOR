@@ -2,14 +2,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import TopMenuBar from "../TopMenuBar";
 import Slider from '@react-native-community/slider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import {
   Text,
   View,
   StyleSheet,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 import ProgramLangSlider from "../programLangSlider";
 import Avatars from "../avatarsFtw.js";
@@ -21,7 +21,6 @@ export default function Home({ navigation }) {
   const [currentSkin, setCurrentSkin] = useState("default");
   const [currentLocalSkin, setCurrentLocalSkin] = useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
   const [valueLang, setValueLang] = useState(0);
 
   const startLoading = () => {
@@ -66,6 +65,8 @@ export default function Home({ navigation }) {
         <TouchableOpacity onPress={() => setCurrentLocalSkin((i) => i + 1)}>
           <View style={[styles.messageDiv, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]}>
             <Text style={styles.paragraph}>HOW DO YOU FEEL TODAY ?</Text>
+             <Text style={styles.paragraph}>КАК ТЫ СЕБЯ ЧУВСТВУЕШЬ ?</Text>
+         
             <Slider
               style={{ width: 200, height: 20 }}
               step={1}

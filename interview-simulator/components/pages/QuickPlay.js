@@ -1,11 +1,5 @@
 import { Text, View, StyleSheet, Image, Button, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, Animated } from 'react-native';
-import { Fontisto } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import TopMenuBar from '../TopMenuBar';
-import ProgramLangSlider from '../programLangSlider';
 import ChallengeBottomBar from '../ChallengeBottomBar';
 import ftwColors from '../data/ColorsFTW';
 import bgImages from '../data/imagesUris';
@@ -13,8 +7,7 @@ import ScirmishDiffBgs from '../data/ScirmishBg';
 
 import ColorsFTW from '../data/ColorsFTW';
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Foundation } from '@expo/vector-icons';
-import { ProgressBar, Colors } from 'react-native-paper';
+import {PAGES} from "../../components/data/consts/Enums";
 const frameWorksList = ['JS HTML', 'REACT', 'ANGULAR']
 const frameWorksImages = ['https://tse3.mm.bing.net/th?id=OIP._wyXLxCYcaZlMeiRtuOy4gAAAA&pid=Api&P=0',
   'https://tse2.mm.bing.net/th?id=OIP.DFlNQnwn7RQfE3Jo5naUhgHaI8&pid=Api&P=0',
@@ -57,16 +50,17 @@ setBg(ScirmishDiffBgs.junior)
   const startAnimation = (frameWorkIndex) => {
     setSelectedFrameWorkIndex(frameWorkIndex);
     Animated.timing(animation, {
-      toValue: 7,
-      duration: 1500,
+      toValue: 9,
+      duration: 1000,
       useNativeDriver: true
     })
       .start(({ returnAnimation }) => {
-        navigation.navigate('INTERVIEW SIMULATOR (Quiz)', params = {
+         setAnimation(new Animated.Value(0));
+        navigation.navigate(PAGES.Quiz, params = {
           lang: frameWorksList[frameWorkIndex],
           difficulty: `${difficulty}`, skin: 'currentSkin'
         })
-        setAnimation(new Animated.Value(0));
+       
       });
   }
   const animatedStyles = {
@@ -80,14 +74,13 @@ setBg(ScirmishDiffBgs.junior)
         style={styles.bgimage}
          backgroundColor={ColorsFTW.skinSlider[Math.floor(Math.random() * ColorsFTW.skinSlider.length)]}
         source={{
-          uri: `${bg[Math.floor(Math.random() * bg.length)]}`,
-         
+          uri: `${bg[Math.floor(Math.random() * bg.length)]}`
         }}
       >
-        <View style={[styles.container, { top: 285 ,  opacity: 0.6}]} >
-          <Animated.View style={[styles.cicrcle, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]} />
-          <Animated.View style={[styles.cicrcle2, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]} />
-          <Animated.View style={[styles.cicrcle3, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }]} />
+        <View style={[styles.container, { top: 85 ,  opacity: 0.5}]} >
+          <Animated.View style={[styles.cicrcle,animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` },{ backgroundColor: `${ftwColors.backgrounds[Math.floor(Math.random() * ftwColors.backgrounds.length)]}` }]} />
+          <Animated.View style={[styles.cicrcle2, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` }],{ backgroundColor: `${ftwColors.backgrounds[Math.floor(Math.random() * ftwColors.backgrounds.length)]}` }} />
+          <Animated.View style={[styles.cicrcle3, animatedStyles, { borderColor: `${ftwBorders[Math.floor(Math.random() * ftwBorders.length)]}` },{ backgroundColor: `${ftwColors.backgrounds[Math.floor(Math.random() * ftwColors.backgrounds.length)]}` }]} />
         </View>
         <TouchableOpacity
           onPress={() => setCurrentSkin(bg[Math.floor(Math.random() * bg.length)])}>
@@ -96,6 +89,8 @@ setBg(ScirmishDiffBgs.junior)
             <Text style={styles.paragraph}>
               <Text style={{ color: "red" }} >
                 {frameWorksList[`${selectedFrameWorkIndex}`]} <FontAwesome5 name="glasses" size={24} color="black" /> {difficulty}</Text>
+                {"\n"}
+                Daily Quests
             </Text>
           </View>
           <View style={styles.categories}>
@@ -107,7 +102,7 @@ setBg(ScirmishDiffBgs.junior)
                   uri: frameWorksImages[0],
                 }} />
                 <Text style={styles.paragraph}>
-                  {selectedFrameWorkIndex}{frameWorksList[0]}</Text>
+                 {frameWorksList[0]}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => startAnimation(1)}>
@@ -115,7 +110,7 @@ setBg(ScirmishDiffBgs.junior)
                   uri: frameWorksImages[1],
                 }} />
                 <Text style={styles.paragraph}>
-                  {selectedFrameWorkIndex}{frameWorksList[1]}</Text>
+                  {frameWorksList[1]}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => startAnimation(2)}>
@@ -123,14 +118,12 @@ setBg(ScirmishDiffBgs.junior)
                   uri: frameWorksImages[2],
                 }} />
                 <Text style={styles.paragraph}>
-                  {selectedFrameWorkIndex}{frameWorksList[2]}</Text>
+                  {frameWorksList[2]}</Text>
               </TouchableOpacity>
             </View>
           </View>
           <ChallengeBottomBar {...{ navigation }} onDifficultySelectionChange={setCurrentDiff}/>
         </TouchableOpacity>
-
-
       </ImageBackground>
     </>
   );
@@ -173,7 +166,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 300,
     flexDirection: "row",
-    backgroundColor: "rgba(244, 249, 251, 0.33)",
+    backgroundColor: "rgba(244, 249, 251, 0.7)",
     borderRadius: 10,
     opacity: 0.8,
     borderColor: "#46ac0a",
@@ -208,7 +201,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 150 / 2,
-    borderWidth: 6,
+    borderWidth: 12,
     borderColor: "rgba(0, 0, 0, 0.9)",
     opacity: 0.9,
     zIndex: 7,
@@ -219,7 +212,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
-    borderWidth: 6,
+    borderWidth: 12,
     borderColor: "rgba(0, 0, 0, 0.90)",
     zIndex: 9,
     opacity: 0.9,
@@ -230,7 +223,7 @@ const styles = StyleSheet.create({
     width: 70,
     height:70,
     borderRadius: 70 / 2,
-    borderWidth: 6,
+    borderWidth: 12,
     zIndex: 8,
     opacity: 0.9,
     backgroundColor:'rgba(255, 255, 255, 0.9)',
